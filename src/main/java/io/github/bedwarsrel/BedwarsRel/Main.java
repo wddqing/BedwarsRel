@@ -72,6 +72,7 @@ import io.github.bedwarsrel.BedwarsRel.Listener.BlockListener;
 import io.github.bedwarsrel.BedwarsRel.Listener.ChunkListener;
 import io.github.bedwarsrel.BedwarsRel.Listener.EntityListener;
 import io.github.bedwarsrel.BedwarsRel.Listener.HangingListener;
+import io.github.bedwarsrel.BedwarsRel.Listener.NickNamerListener;
 import io.github.bedwarsrel.BedwarsRel.Listener.Player19Listener;
 import io.github.bedwarsrel.BedwarsRel.Listener.PlayerListener;
 import io.github.bedwarsrel.BedwarsRel.Listener.PlayerSpigotListener;
@@ -697,9 +698,11 @@ public class Main extends JavaPlugin {
     new ServerListener();
     new SignListener();
     new ChunkListener();
-
     if (this.isSpigot()) {
       new PlayerSpigotListener();
+    }
+    if (this.isNickNamerEnabled()) {
+      new NickNamerListener();
     }
 
     SpecialItem.loadSpecials();
@@ -903,6 +906,10 @@ public class Main extends JavaPlugin {
         && this.getServer().getPluginManager().isPluginEnabled("PacketListenerApi"))
         || (this.getServer().getPluginManager().isPluginEnabled("HolographicDisplays")
             && this.getServer().getPluginManager().isPluginEnabled("ProtocolLib"));
+  }
+
+  public boolean isNickNamerEnabled() {
+    return this.getServer().getPluginManager().isPluginEnabled("NickNamer");
   }
 
   public String getMissingHoloDependency() {

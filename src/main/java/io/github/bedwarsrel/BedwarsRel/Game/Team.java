@@ -18,6 +18,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.inventivetalent.nicknamer.api.NickNamerAPI;
 
 import io.github.bedwarsrel.BedwarsRel.Main;
 import io.github.bedwarsrel.BedwarsRel.Utils.Utils;
@@ -77,21 +78,24 @@ public class Team implements ConfigurationSerializable {
         return false;
       }
     }
-    if (Main.getInstance().getBooleanConfig("overwrite-names", false)) {
-      player.setDisplayName(this.getChatColor() + ChatColor.stripColor(player.getName()));
-      player.setPlayerListName(this.getChatColor() + ChatColor.stripColor(player.getName()));
-    }
-
-    if (Main.getInstance().getBooleanConfig("teamname-on-tab", true)) {
-      player.setPlayerListName(this.getChatColor() + this.getName() + ChatColor.WHITE + " | "
-          + this.getChatColor() + ChatColor.stripColor(player.getDisplayName()));
-    }
 
     if (Main.getInstance().isSpigot()) {
       this.getScoreboardTeam().addEntry(player.getName());
     } else {
       this.getScoreboardTeam().addPlayer(player);
     }
+
+    if (Main.getInstance().getBooleanConfig("overwrite-names", false)) {
+      player.setDisplayName(this.getChatColor() + ChatColor.stripColor(this.getPlayerName(player)));
+      player.setPlayerListName(
+          this.getChatColor() + ChatColor.stripColor(this.getPlayerName(player)));
+    }
+
+    if (Main.getInstance().getBooleanConfig("teamname-on-tab", true)) {
+      player.setPlayerListName(this.getChatColor() + this.getName() + ChatColor.WHITE + " | "
+          + this.getChatColor() + ChatColor.stripColor(this.getPlayerDisplayName(player)));
+    }
+
     this.equipPlayerWithLeather(player);
 
     return true;
@@ -101,6 +105,22 @@ public class Team implements ConfigurationSerializable {
     Inventory inventory =
         Bukkit.createInventory(null, InventoryType.ENDER_CHEST, Main._l("ingame.teamchest"));
     this.setInventory(inventory);
+  }
+
+  public String getPlayerName(Player player) {
+    if (Main.getInstance().isNickNamerEnabled()
+        && NickNamerAPI.getNickManager().isNicked(player.getUniqueId())) {
+      return NickNamerAPI.getNickManager().getNick(player.getUniqueId());
+    }
+    return player.getName();
+  }
+
+  public String getPlayerDisplayName(Player player) {
+    if (Main.getInstance().isNickNamerEnabled()
+        && NickNamerAPI.getNickManager().isNicked(player.getUniqueId())) {
+      return NickNamerAPI.getNickManager().getNick(player.getUniqueId());
+    }
+    return player.getDisplayName();
   }
 
   private void equipPlayerWithLeather(Player player) {

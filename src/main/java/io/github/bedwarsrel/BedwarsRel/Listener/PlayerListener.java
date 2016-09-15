@@ -518,27 +518,6 @@ public class PlayerListener extends BaseListener {
     String message = ce.getMessage();
     boolean isSpectator = game.isSpectator(player);
 
-    if (Main.getInstance().getBooleanConfig("overwrite-names", false)) {
-      if (team == null) {
-        player.setDisplayName(ChatColor.stripColor(player.getName()));
-
-        player.setPlayerListName(ChatColor.stripColor(player.getName()));
-      } else {
-        player.setDisplayName(team.getChatColor() + ChatColor.stripColor(player.getName()));
-        player.setPlayerListName(team.getChatColor() + ChatColor.stripColor(player.getName()));
-      }
-
-    }
-
-    if (Main.getInstance().getBooleanConfig("teamname-on-tab", false)) {
-      if (team == null || isSpectator) {
-        player.setPlayerListName(ChatColor.stripColor(player.getDisplayName()));
-      } else {
-        player.setPlayerListName(team.getChatColor() + team.getName() + ChatColor.WHITE + " | "
-            + team.getChatColor() + ChatColor.stripColor(player.getDisplayName()));
-      }
-    }
-
     if (game.getState() != GameState.RUNNING && game.getState() == GameState.WAITING) {
       String format = null;
       if (team == null) {

@@ -235,7 +235,8 @@ public class PlayerStorage {
       teamplayers.add(ChatColor.WHITE + "---------");
 
       for (Player teamPlayer : players) {
-        teamplayers.add(team.getChatColor() + ChatColor.stripColor(teamPlayer.getDisplayName()));
+        teamplayers
+            .add(team.getChatColor() + ChatColor.stripColor(team.getPlayerDisplayName(teamPlayer)));
       }
 
       im.setLore(teamplayers);
