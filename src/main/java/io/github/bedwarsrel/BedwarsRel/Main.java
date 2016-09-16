@@ -909,7 +909,7 @@ public class Main extends JavaPlugin {
   }
 
   public boolean isNickNamerEnabled() {
-    return this.getServer().getPluginManager().isPluginEnabled("NickNamer");
+    return this.getConfig().getBoolean("integrations.nicknamer", false) && this.getServer().getPluginManager().isPluginEnabled("NickNamer");
   }
 
   public String getMissingHoloDependency() {
