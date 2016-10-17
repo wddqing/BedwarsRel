@@ -11,3 +11,5 @@ buildNumber.properties
 /.settings
 .project
 .classpath
+out/
+lib/
