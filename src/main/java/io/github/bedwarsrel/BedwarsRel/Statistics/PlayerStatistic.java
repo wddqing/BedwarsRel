@@ -130,7 +130,7 @@ public class PlayerStatistic extends StoringTable {
     this.currentScore = score;
   }
 
-  @DBGetField(name = "uuid", dbType = "VARCHAR(255)")
+  @DBGetField(name = "uuid", dbType = "VARCHAR(150)")
   public String getUUID() throws Exception {
     if (this.uuid == null) {
       try {
