@@ -58,7 +58,7 @@ public class DatabaseManager {
       // currently only mysql is supported
       this.dataSource.setDriverClass("com.mysql.jdbc.Driver");
       this.dataSource.setJdbcUrl(
-          "jdbc:mysql://" + this.host + ":" + String.valueOf(this.port) + "/" + this.database+"?characterEncoding=UTF-8");
+          "jdbc:mysql://" + this.host + ":" + String.valueOf(this.port) + "/" + this.database+"?useUnicode=true&characterEncoding=UTF-8");
 
       this.dataSource.setUser(this.user);
       this.dataSource.setPassword(this.password);
