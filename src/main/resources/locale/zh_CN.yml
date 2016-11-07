@@ -283,3 +283,6 @@ commands:
     name: 删除权限显示
     desc: 使用这个命令后玩家right-click即可移除全息图.
     explain: 10秒只可执行一次
+  lobby:
+    name: 返回大厅
+    desc: 使玩家回到游戏大厅.

@@ -283,7 +283,7 @@ public class Game {
                             for (Player player : team.getPlayers()) {
                                 try {
                                     sendActionBar.invoke(null, player,
-                                            team.getChatColor() + "Team " + team.getDisplayName());
+                                            team.getChatColor() + "队伍 " + team.getDisplayName());
                                 } catch (IllegalAccessException | IllegalArgumentException
                                         | InvocationTargetException e) {
                                     Main.getInstance().getBugsnag().notify(e);

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import io.github.bedwarsrel.BedwarsRel.Commands.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -28,38 +29,6 @@ import com.bugsnag.BeforeNotify;
 import com.bugsnag.Client;
 import com.google.common.collect.ImmutableMap;
 
-import io.github.bedwarsrel.BedwarsRel.Commands.AddGameCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.AddHoloCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.AddTeamCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.AddTeamJoinCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.BaseCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.ClearSpawnerCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.GameTimeCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.HelpCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.JoinGameCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.KickCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.LeaveGameCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.ListGamesCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.RegionNameCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.ReloadCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.RemoveGameCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.RemoveHoloCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.RemoveTeamCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SaveGameCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetAutobalanceCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetBedCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetBuilderCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetGameBlockCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetLobbyCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetMainLobbyCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetMinPlayersCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetRegionCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetSpawnCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetSpawnerCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.SetTargetCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.StartGameCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.StatsCommand;
-import io.github.bedwarsrel.BedwarsRel.Commands.StopGameCommand;
 import io.github.bedwarsrel.BedwarsRel.Database.DatabaseManager;
 import io.github.bedwarsrel.BedwarsRel.Game.Game;
 import io.github.bedwarsrel.BedwarsRel.Game.GameManager;
@@ -729,7 +698,8 @@ public class Main extends JavaPlugin {
     this.commands.add(new AddTeamJoinCommand(this));
     this.commands.add(new AddHoloCommand(this));
     this.commands.add(new RemoveHoloCommand(this));
-
+    this.commands.add(new LobbyCommand(this));
+      
     this.getCommand("bw").setExecutor(executor);
   }
 
