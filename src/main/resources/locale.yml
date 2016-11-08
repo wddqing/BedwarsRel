@@ -109,6 +109,7 @@ ingame:
     team-dead: "Team $team$ was destroyed!"
     no-friendlybreak: "&cCan't break block under team-member!"
     teamchestdestroy: "&cOne of your teamchest(s) has been destroyed!"
+    kickedforgameend: "You're kicked for game reload!"
     title:
         map-builder: "Built by $builder$"
         win-title: "&6Congratulations!"

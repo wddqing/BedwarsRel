@@ -109,6 +109,7 @@ ingame:
   team-dead: 队伍$team$被消灭!
   no-friendlybreak: '&chi，不能破坏队伍成员脚下的方块!'
   teamchestdestroy: '&c有一个队伍箱子被破坏!'
+  kickedforgameend: 游戏结束，重置游戏！
   title:
     map-builder: 地图作者$builder$
     win-title: '&6恭喜!'

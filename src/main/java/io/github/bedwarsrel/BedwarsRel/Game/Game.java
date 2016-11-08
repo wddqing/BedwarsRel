@@ -857,6 +857,7 @@ public class Game {
 
         this.updateSigns();
         this.playerStorages.remove(p);
+
         return true;
     }
 

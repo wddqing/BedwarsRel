@@ -42,7 +42,6 @@ public class LocalizationConfig extends YamlConfiguration {
                 new File(Main.getInstance().getDataFolder().getPath() + "/locale/" + locKey + ".yml");
         BufferedReader reader = null;
         InputStream inputStream = null;
-        System.out.println("--------------------local:" + Main.getInstance().getDataFolder().getPath()+" locKey "+locKey);
         if (locFile.exists()) {
             try {
                 inputStream = new FileInputStream(locFile);
