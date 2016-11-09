@@ -291,6 +291,17 @@ public class Game {
                                 }
                             }
                         }
+                        // 观战模式玩家提示离开游戏方法
+                        for (Player player : getFreePlayers()) {
+                            try {
+                                sendActionBar.invoke(null, player,
+                                        ChatColor.GREEN + "输入“/bw leave”或者按“e”键后点击粘液球可以离开游戏");
+                            } catch (IllegalAccessException | IllegalArgumentException
+                                    | InvocationTargetException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
                     }
                 }.runTaskTimer(Main.getInstance(), 0L, 20L);
                 this.addRunningTask(task);
