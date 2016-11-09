@@ -35,9 +35,6 @@ public class BungeeGameCycle extends GameCycle {
 
     private void kickAllPlayers() {
         for (Player player : this.getGame().getTeamPlayers()) {
-            for (Player freePlayer : this.getGame().getFreePlayers()) {
-                player.showPlayer(freePlayer);
-            }
             this.getGame().playerLeave(player, false);
         }
 

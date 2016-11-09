@@ -698,8 +698,7 @@ public class Main extends JavaPlugin {
     this.commands.add(new AddTeamJoinCommand(this));
     this.commands.add(new AddHoloCommand(this));
     this.commands.add(new RemoveHoloCommand(this));
-    this.commands.add(new LobbyCommand(this));
-      
+
     this.getCommand("bw").setExecutor(executor);
   }
 

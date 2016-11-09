@@ -752,33 +752,20 @@ public class Game {
             statistic = Main.getInstance().getPlayerStatisticManager().getStatistic(p);
         }
 
-        if (this.isSpectator(p)) {
-            if (!this.getCycle().isEndGameRunning()) {
-                for (Player player : this.getPlayers()) {
-                    if (player.equals(p)) {
-                        continue;
-                    }
-
-                    player.showPlayer(p);
-                    p.showPlayer(player);
+        if (!this.isSpectator(p) && this.state == GameState.RUNNING && !this.getCycle().isEndGameRunning()) {
+            if (!team.isDead(this) && !p.isDead() && Main.getInstance().statisticsEnabled()
+                    && Main.getInstance().getBooleanConfig("statistics.player-leave-kills", false)) {
+                statistic.setDeaths(statistic.getDeaths() + 1);
+                statistic.addCurrentScore(Main.getInstance().getIntConfig("statistics.scores.die", 0));
+                if (this.getPlayerDamager(p) != null) {
+                    PlayerStatistic killerPlayer = Main.getInstance().getPlayerStatisticManager()
+                            .getStatistic(this.getPlayerDamager(p));
+                    killerPlayer.setKills(killerPlayer.getKills() + 1);
+                    killerPlayer
+                            .addCurrentScore(Main.getInstance().getIntConfig("statistics.scores.kill", 10));
                 }
-            }
-        } else {
-            if (this.state == GameState.RUNNING && !this.getCycle().isEndGameRunning()) {
-                if (!team.isDead(this) && !p.isDead() && Main.getInstance().statisticsEnabled()
-                        && Main.getInstance().getBooleanConfig("statistics.player-leave-kills", false)) {
-                    statistic.setDeaths(statistic.getDeaths() + 1);
-                    statistic.addCurrentScore(Main.getInstance().getIntConfig("statistics.scores.die", 0));
-                    if (this.getPlayerDamager(p) != null) {
-                        PlayerStatistic killerPlayer = Main.getInstance().getPlayerStatisticManager()
-                                .getStatistic(this.getPlayerDamager(p));
-                        killerPlayer.setKills(killerPlayer.getKills() + 1);
-                        killerPlayer
-                                .addCurrentScore(Main.getInstance().getIntConfig("statistics.scores.kill", 10));
-                    }
-                    statistic.setLoses(statistic.getLoses() + 1);
-                    statistic.addCurrentScore(Main.getInstance().getIntConfig("statistics.scores.lose", 0));
-                }
+                statistic.setLoses(statistic.getLoses() + 1);
+                statistic.addCurrentScore(Main.getInstance().getIntConfig("statistics.scores.lose", 0));
             }
         }
 
@@ -787,8 +774,10 @@ public class Game {
         }
 
         this.playerDamages.remove(p);
-        if (team != null && Main.getInstance().getGameManager().getGameOfPlayer(p) != null
-                && !Main.getInstance().getGameManager().getGameOfPlayer(p).isSpectator(p)) {
+        //        if (team != null && Main.getInstance().getGameManager().getGameOfPlayer(p) != null
+        //        && !Main.getInstance().getGameManager().getGameOfPlayer(p).isSpectator(p)) {
+        //        修复bug：观战模式打开后，重置游戏的时候没有清除队伍里的玩家，因为玩家变成了观察者
+        if (team != null && Main.getInstance().getGameManager().getGameOfPlayer(p) != null) {
             team.removePlayer(p);
             if (kicked) {
                 this.broadcast(ChatColor.RED + Main._l("ingame.player.kicked", ImmutableMap.of("player",
