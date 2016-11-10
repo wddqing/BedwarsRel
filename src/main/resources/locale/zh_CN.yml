@@ -110,6 +110,7 @@ ingame:
   no-friendlybreak: '&chi，不能破坏队伍成员脚下的方块!'
   teamchestdestroy: '&c有一个队伍箱子被破坏!'
   kickedforgameend: 游戏结束，重置游戏！
+  toofartobreakbed: 距离太远了，没法破坏床，靠近点试试！
   title:
     map-builder: 地图作者$builder$
     win-title: '&6恭喜!'

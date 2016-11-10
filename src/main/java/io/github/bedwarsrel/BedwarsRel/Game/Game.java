@@ -295,7 +295,7 @@ public class Game {
                         for (Player player : getFreePlayers()) {
                             try {
                                 sendActionBar.invoke(null, player,
-                                        ChatColor.GREEN + "输入“/bw leave”或者按“e”键后点击粘液球可以离开游戏");
+                                        ChatColor.GREEN + "输入“/bw leave”或者按“e”键后点击粘液球回到大厅");
                             } catch (IllegalAccessException | IllegalArgumentException
                                     | InvocationTargetException e) {
                                 e.printStackTrace();
@@ -928,6 +928,12 @@ public class Game {
             if (bedBlock.equals(breakBlock)) {
                 p.sendMessage(
                         ChatWriter.pluginMessage(ChatColor.RED + Main._l("ingame.blocks.ownbeddestroy")));
+                return false;
+            }
+
+            //判断破坏床的时候玩家的位置是否太远了，距离在2以内才能破坏
+            if(breakBlock.getLocation().distance(p.getLocation())  >= 2){
+                p.sendMessage(ChatWriter.pluginMessage(ChatColor.RED +Main._l("ingame.toofartobreakbed")));
                 return false;
             }
 
