@@ -470,6 +470,11 @@ statistics:
     # type: int
     # Sets the score which all team-players gets when they made a new record
     record: 100
+
+    # min score of player
+    # type: int
+    # set the score which player's score can't less than
+    min: 5
   
 # Database (currently only mysql) configuration
 database:

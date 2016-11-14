@@ -812,7 +812,8 @@ public class Game {
         if (Main.getInstance().statisticsEnabled()) {
             // store statistics and unload
             int score = statistic.getScore() + statistic.getCurrentScore();
-            statistic.setScore(score < 5 ? 5 : score);//最低分是5分，战斗力只有5的渣渣
+            int minScore = Main.getInstance().getIntConfig("statistics.scores.min",5);
+            statistic.setScore(score < minScore ? minScore : score);//最低分是5分，战斗力只有5的渣渣
             statistic.setCurrentScore(0);
             statistic.store();
 
