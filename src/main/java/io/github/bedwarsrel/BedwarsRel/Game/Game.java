@@ -811,7 +811,8 @@ public class Game {
 
         if (Main.getInstance().statisticsEnabled()) {
             // store statistics and unload
-            statistic.setScore(statistic.getScore() + statistic.getCurrentScore());
+            int score = statistic.getScore() + statistic.getCurrentScore();
+            statistic.setScore(score < 5 ? 5 : score);//最低分是5分，战斗力只有5的渣渣
             statistic.setCurrentScore(0);
             statistic.store();
 
@@ -931,9 +932,9 @@ public class Game {
                 return false;
             }
 
-            //判断破坏床的时候玩家的位置是否太远了，距离在2以内才能破坏
-            if(breakBlock.getLocation().distance(p.getLocation())  >= 2){
-                p.sendMessage(ChatWriter.pluginMessage(ChatColor.RED +Main._l("ingame.toofartobreakbed")));
+            //判断破坏床的时候玩家的位置是否太远了，距离在3以内才能破坏
+            if (breakBlock.getLocation().distance(p.getLocation()) > 3) {
+                p.sendMessage(ChatWriter.pluginMessage(ChatColor.RED + Main._l("ingame.toofartobreakbed")));
                 return false;
             }
 

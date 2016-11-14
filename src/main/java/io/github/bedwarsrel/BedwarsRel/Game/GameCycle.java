@@ -267,6 +267,7 @@ public abstract class GameCycle {
         PlayerStatistic statistic =
             Main.getInstance().getPlayerStatisticManager().getStatistic(player);
         statistic.setLoses(statistic.getLoses() + 1);
+        statistic.addCurrentScore(Main.getInstance().getIntConfig("statistics.scores.lose", 0));//失败的时候扣分
       }
 
       if (Main.getInstance().spectationEnabled()) {
