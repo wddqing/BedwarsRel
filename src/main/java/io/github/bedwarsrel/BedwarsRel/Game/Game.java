@@ -812,7 +812,7 @@ public class Game {
         if (Main.getInstance().statisticsEnabled()) {
             // store statistics and unload
             int score = statistic.getScore() + statistic.getCurrentScore();
-            int minScore = Main.getInstance().getIntConfig("statistics.scores.min",5);
+            int minScore = Main.getInstance().getIntConfig("statistics.scores.min", 5);
             statistic.setScore(score < minScore ? minScore : score);//最低分是5分，战斗力只有5的渣渣
             statistic.setCurrentScore(0);
             statistic.store();
@@ -1951,6 +1951,10 @@ public class Game {
                     Game.this.getCycle().checkGameOver();
                     this.cancel();
                     return;
+                }
+                // 游戏时间剩余15分钟，广播装备变换
+                if (Game.this.timeLeft == 900) {
+                    Game.this.broadcast(ChatColor.RED + "游戏剩余15分钟，所有弓箭升级为凋零弓！");
                 }
 
                 Game.this.timeLeft--;
