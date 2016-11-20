@@ -110,8 +110,8 @@ public class BungeeGameCycle extends GameCycle {
         this.getGame().clearProtections();
 
         // set state and with that, the sign
-        this.getGame().setState(GameState.WAITING);
-        this.getGame().updateScoreboard();
+        this.getGame().setState(GameState.RESTARTING);
+
 
         // reset region
         this.getGame().resetRegion();
@@ -127,7 +127,7 @@ public class BungeeGameCycle extends GameCycle {
                     Main.getInstance().getLogger().info("请求控制器重启：" + ret);
                 }
             }
-        }.runTaskLaterAsynchronously(Main.getInstance(), 80L);
+        }.runTaskLaterAsynchronously(Main.getInstance(), 100L);
 //        }
     }
 
@@ -289,11 +289,11 @@ public class BungeeGameCycle extends GameCycle {
             players.addAll(this.getGame().getTeamPlayers());
             players.addAll(this.getGame().getFreePlayers());
             for (Player player : players) {
-                  //将所有用户都转移到大厅，避免破坏游戏场景
+                //将所有用户都转移到大厅，避免破坏游戏场景
 //                if (!player.getWorld().equals(this.getGame().getLobby().getWorld())) {
-                    game.getPlayerSettings(player).setTeleporting(true);
-                    player.teleport(this.getGame().getLobby());
-                    game.getPlayerStorage(player).clean();
+                game.getPlayerSettings(player).setTeleporting(true);
+                player.teleport(this.getGame().getLobby());
+                game.getPlayerStorage(player).clean();
 //                }
             }
             new BukkitRunnable() {

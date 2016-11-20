@@ -635,7 +635,7 @@ public class Game {
 
     public boolean playerJoins(final Player p) {
         //关闭或者运行中
-        if (this.state == GameState.STOPPED || this.state == GameState.RUNNING) {
+        if (this.state == GameState.STOPPED || this.state == GameState.RUNNING || this.state == GameState.RESTARTING) {
             if (this.cycle instanceof BungeeGameCycle) {
                 p.sendMessage(Main._l("errors.cantjoingame"));
                 ((BungeeGameCycle) this.cycle).sendBungeeMessage(p,
