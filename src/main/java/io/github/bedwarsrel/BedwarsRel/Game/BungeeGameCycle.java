@@ -127,7 +127,7 @@ public class BungeeGameCycle extends GameCycle {
                     Main.getInstance().getLogger().info("请求控制器重启：" + ret);
                 }
             }
-        }.runTaskLaterAsynchronously(Main.getInstance(), 70L);
+        }.runTaskLaterAsynchronously(Main.getInstance(), 80L);
 //        }
     }
 
@@ -266,7 +266,7 @@ public class BungeeGameCycle extends GameCycle {
                     player.sendPluginMessage(Main.getInstance(), "BungeeCord", b.toByteArray());
                 }
             }
-        }.runTaskLater(Main.getInstance(), (preventDelay) ? 0L : 20L);
+        }.runTaskLaterAsynchronously(Main.getInstance(), (preventDelay) ? 0L : 20L);
 
 
         new BukkitRunnable() {
@@ -277,25 +277,25 @@ public class BungeeGameCycle extends GameCycle {
                     player.kickPlayer(Main._l("ingame.kickedforgameend"));
                 }
             }
-        }.runTaskLater(Main.getInstance(), 50L);
+        }.runTaskLaterAsynchronously(Main.getInstance(), 60L);
     }
 
     @Override
     public void onGameOver(GameOverTask task) {
-        if (Main.getInstance().getBooleanConfig("bungeecord.endgame-in-lobby", true)) {
+        //只在游戏结束开始时执行
+        if (Main.getInstance().getBooleanConfig("bungeecord.endgame-in-lobby", true) && task.getCounter() == task.getStartCount()) {
             final ArrayList<Player> players = new ArrayList<Player>();
             final Game game = this.getGame();
             players.addAll(this.getGame().getTeamPlayers());
             players.addAll(this.getGame().getFreePlayers());
             for (Player player : players) {
-
-                if (!player.getWorld().equals(this.getGame().getLobby().getWorld())) {
+                  //将所有用户都转移到大厅，避免破坏游戏场景
+//                if (!player.getWorld().equals(this.getGame().getLobby().getWorld())) {
                     game.getPlayerSettings(player).setTeleporting(true);
                     player.teleport(this.getGame().getLobby());
                     game.getPlayerStorage(player).clean();
-                }
+//                }
             }
-
             new BukkitRunnable() {
                 @Override
                 public void run() {
