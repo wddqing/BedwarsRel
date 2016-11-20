@@ -266,7 +266,7 @@ public class BungeeGameCycle extends GameCycle {
                     player.sendPluginMessage(Main.getInstance(), "BungeeCord", b.toByteArray());
                 }
             }
-        }.runTaskLaterAsynchronously(Main.getInstance(), (preventDelay) ? 0L : 20L);
+        }.runTaskLater(Main.getInstance(), (preventDelay) ? 0L : 20L);
 
 
         new BukkitRunnable() {
@@ -277,7 +277,7 @@ public class BungeeGameCycle extends GameCycle {
                     player.kickPlayer(Main._l("ingame.kickedforgameend"));
                 }
             }
-        }.runTaskLaterAsynchronously(Main.getInstance(), 60L);
+        }.runTaskLater(Main.getInstance(), 60L);
     }
 
     @Override
