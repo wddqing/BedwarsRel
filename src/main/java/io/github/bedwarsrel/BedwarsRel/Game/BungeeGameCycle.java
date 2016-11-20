@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.JsonObject;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -45,49 +46,89 @@ public class BungeeGameCycle extends GameCycle {
 
     @Override
     public void onGameEnds() {
-        if (Main.getInstance().getBooleanConfig("bungeecord.full-restart", true)) {
-            this.kickAllPlayers();
+//        if (Main.getInstance().getBooleanConfig("bungeecord.full-restart", true)) {
 
-            this.getGame().resetRegion();
-            new BukkitRunnable() {
+//            this.getGame().resetScoreboard();
+//            this.kickAllPlayers();
+//            this.setEndGameRunning(false);
+//            this.getGame().clearProtections();
+//            // Reset team chests
+//            for (Team team : this.getGame().getTeams().values()) {
+//                team.setInventory(null);
+//                team.getChests().clear();
+//            }
+//
+//            this.getGame().resetRegion();
+//
+//            //重写游戏结束后的重置，调用控制器重启服务器
+//            System.out.println("注册任务。。。。。。。。。");
+//            new BukkitRunnable() {
+//                @Override
+//                public void run() {
+//
+//                    if (!Main.getInstance().getGameManager().getGames().get(0).getIsResetting()) {
+//                        String strUrl = Main.getInstance().getStringConfig("bungeecord.controller-rpc", "http://127.0.0.1:8081/rpc");
+//                        JsonObject object = new JsonObject();
+//                        object.addProperty("id", Main.getInstance().getServerId());
+//                        String ret = Utils.httpPostRequest(strUrl, "service=mchere.manager&method=ManagerService.RestartServer&request=" + object.toString());
+//                        Main.getInstance().getLogger().info("请求控制器重启：" + ret);
+//                    }
+//                }
+//            }.runTaskLater(Main.getInstance(), 400L);
 
-                @Override
-                public void run() {
-                    if (Main.getInstance().isSpigot()
-                            && Main.getInstance().getBooleanConfig("bungeecord.spigot-restart", true)) {
-                        Main.getInstance().getServer()
-                                .dispatchCommand(Main.getInstance().getServer().getConsoleSender(), "restart");
-                    } else {
-                        Bukkit.shutdown();
-                    }
-                }
-            }.runTaskLater(Main.getInstance(), 70L);
-        } else {
-            // Reset scoreboard first
-            this.getGame().resetScoreboard();
+        //
+//            new BukkitRunnable() {
+//
+//                @Override
+//                public void run() {
+//                    if (Main.getInstance().isSpigot()
+//                            && Main.getInstance().getBooleanConfig("bungeecord.spigot-restart", true)) {
+//                        Main.getInstance().getServer()
+//                                .dispatchCommand(Main.getInstance().getServer().getConsoleSender(), "restart");
+//                    } else {
+//                        Bukkit.shutdown();
+//                    }
+//                }
+//            }.runTaskLater(Main.getInstance(), 70L);
+//        } else {
+        // Reset scoreboard first
+        this.getGame().resetScoreboard();
 
-            // Kick all players
-            this.kickAllPlayers();
+        // Kick all players
+        this.kickAllPlayers();
 
-            // reset countdown prevention breaks
-            this.setEndGameRunning(false);
+        // reset countdown prevention breaks
+        this.setEndGameRunning(false);
 
-            // Reset team chests
-            for (Team team : this.getGame().getTeams().values()) {
-                team.setInventory(null);
-                team.getChests().clear();
-            }
-
-            // clear protections
-            this.getGame().clearProtections();
-
-            // set state and with that, the sign
-            this.getGame().setState(GameState.WAITING);
-            this.getGame().updateScoreboard();
-
-            // reset region
-            this.getGame().resetRegion();
+        // Reset team chests
+        for (Team team : this.getGame().getTeams().values()) {
+            team.setInventory(null);
+            team.getChests().clear();
         }
+
+        // clear protections
+        this.getGame().clearProtections();
+
+        // set state and with that, the sign
+        this.getGame().setState(GameState.WAITING);
+        this.getGame().updateScoreboard();
+
+        // reset region
+        this.getGame().resetRegion();
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (!Main.getInstance().getGameManager().getGames().get(0).getIsResetting()) {
+                    String strUrl = Main.getInstance().getStringConfig("bungeecord.controller-rpc", "http://127.0.0.1:8081/rpc");
+                    JsonObject object = new JsonObject();
+                    object.addProperty("id", Main.getInstance().getServerId());
+                    String ret = Utils.httpPostRequest(strUrl, "service=mchere.manager&method=ManagerService.RestartServer&request=" + object.toString());
+                    Main.getInstance().getLogger().info("请求控制器重启：" + ret);
+                }
+            }
+        }.runTaskLaterAsynchronously(Main.getInstance(), 70L);
+//        }
     }
 
     @Override
@@ -262,9 +303,9 @@ public class BungeeGameCycle extends GameCycle {
                         game.setPlayerGameMode(player);
                         game.setPlayerVisibility(player);
 
-                        if (!player.getInventory().contains(Material.SLIME_BALL)) {
+                        if (!player.getInventory().contains(Material.WOOD_DOOR)) {
                             // Leave Game (Slimeball)
-                            ItemStack leaveGame = new ItemStack(Material.SLIME_BALL, 1);
+                            ItemStack leaveGame = new ItemStack(Material.WOOD_DOOR, 1);
                             ItemMeta im = leaveGame.getItemMeta();
                             im.setDisplayName(Main._l("lobby.leavegame"));
                             leaveGame.setItemMeta(im);

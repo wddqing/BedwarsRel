@@ -80,6 +80,7 @@ public class Game {
     private int timeLeft = 0;
     private boolean isOver = false;
     private boolean isStopping = false;
+    private boolean isResetting = false;
 
     private Location hologramLocation = null;
 
@@ -112,6 +113,14 @@ public class Game {
     private Location loc2 = null;
 
     private Material targetMaterial = null;
+
+    public boolean getIsResetting() {
+        return this.isResetting;
+    }
+
+    public void setIsResetting(boolean isResetting) {
+        this.isResetting = isResetting;
+    }
 
     public Game(String name) {
         super();
@@ -295,7 +304,7 @@ public class Game {
                         for (Player player : getFreePlayers()) {
                             try {
                                 sendActionBar.invoke(null, player,
-                                        ChatColor.GREEN + "输入“/bw leave”或者按“e”键后点击粘液球回到大厅");
+                                        ChatColor.GREEN + "输入“/bw leave”或者按“e”键后点击门回到大厅");
                             } catch (IllegalAccessException | IllegalArgumentException
                                     | InvocationTargetException e) {
                                 e.printStackTrace();
@@ -516,7 +525,7 @@ public class Game {
         }.runTaskLater(Main.getInstance(), 15L);
 
         // Leave Game (Slimeball)
-        ItemStack leaveGame = new ItemStack(Material.SLIME_BALL, 1);
+        ItemStack leaveGame = new ItemStack(Material.WOOD_DOOR, 1);
         ItemMeta im = leaveGame.getItemMeta();
         im.setDisplayName(Main._l("lobby.leavegame"));
         leaveGame.setItemMeta(im);
@@ -726,20 +735,24 @@ public class Game {
                 this.displayRecord(p);
             }
 
-            if (this.isStartable()) {
-                if (this.gameLobbyCountdown == null) {
+            //如果已经开始了倒计时，则无需判断人数是否够了
+            if (this.gameLobbyCountdown == null) {
+                if (this.isStartable()) {
+                    //如果可以开始 启动倒计时
                     this.gameLobbyCountdown = new GameLobbyCountdown(this);
                     this.gameLobbyCountdown.runTaskTimer(Main.getInstance(), 20L, 20L);
-                }
-            } else {
-                if (!this.hasEnoughPlayers()) {
-                    int playersNeeded = this.getMinPlayers() - this.getPlayerAmount();
-                    this.broadcast(ChatColor.GREEN + Main._l("lobby.moreplayersneeded", "count",
-                            ImmutableMap.of("count", String.valueOf(playersNeeded))));
-                } else if (!this.hasEnoughTeams()) {
-                    this.broadcast(ChatColor.RED + Main._l("lobby.moreteamssneeded"));
+                } else {
+                    if (!this.hasEnoughPlayers()) {
+                        int playersNeeded = this.getMinPlayers() - this.getPlayerAmount();
+                        this.broadcast(ChatColor.GREEN + Main._l("lobby.moreplayersneeded", "count",
+                                ImmutableMap.of("count", String.valueOf(playersNeeded))));
+                    } else if (!this.hasEnoughTeams()) {
+                        this.broadcast(ChatColor.RED + Main._l("lobby.moreteamssneeded"));
+                    }
                 }
             }
+
+
         }
 
         BedwarsPlayerJoinedEvent joinEvent = new BedwarsPlayerJoinedEvent(this, null, p);

@@ -74,10 +74,7 @@
           <root url="jar://$MODULE_DIR$/lib/spigot-1.9.4-R2-4af49dc-23da8b0.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/lib/spigot-1.9.4-R2-4af49dc-23da8b0.jar!/" />
-          <root url="jar://$MODULE_DIR$/lib/spigot-1.9.4-R2-4af49dc-23da8b0.jar!/" />
-        </SOURCES>
+        <SOURCES />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
