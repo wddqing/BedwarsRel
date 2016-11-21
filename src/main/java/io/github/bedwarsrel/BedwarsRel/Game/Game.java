@@ -80,7 +80,6 @@ public class Game {
     private int timeLeft = 0;
     private boolean isOver = false;
     private boolean isStopping = false;
-    private boolean isResetting = false;
 
     private Location hologramLocation = null;
 
@@ -114,12 +113,15 @@ public class Game {
 
     private Material targetMaterial = null;
 
-    public boolean getIsResetting() {
-        return this.isResetting;
+
+    private Integer gameRunTimes = 0; //游戏运行次数，用于判断是否需要重启服务器
+
+    public Integer gameRunTimes() {
+        return this.gameRunTimes;
     }
 
-    public void setIsResetting(boolean isResetting) {
-        this.isResetting = isResetting;
+    public void incGameRunTimes() {
+        this.gameRunTimes++;
     }
 
     public Game(String name) {
@@ -273,6 +275,9 @@ public class Game {
             Main.getInstance().getServer().broadcastMessage(ChatWriter.pluginMessage(ChatColor.GREEN
                     + Main._l("ingame.gamestarted", ImmutableMap.of("game", this.getRegion().getName()))));
         }
+
+        this.incGameRunTimes();
+
         return true;
     }
 

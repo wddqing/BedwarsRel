@@ -177,6 +177,7 @@ sign:
     waiting: '&a等待中 ...'
     running: '&9正在运行!'
     full: 已满!
+    restarting: "重启中!"
 stats:
   header: 护床战争统计
   kd: K/D

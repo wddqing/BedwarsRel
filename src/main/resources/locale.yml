@@ -177,6 +177,7 @@ sign:
         waiting: "&aWaiting ..."
         running: "&9Running!"
         full: "Full!"
+        restarting: "Restarting!"
 stats:
     header: "Bedwars Stats"
     kd: "K/D"

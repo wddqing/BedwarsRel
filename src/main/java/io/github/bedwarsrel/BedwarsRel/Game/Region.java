@@ -131,9 +131,6 @@ public class Region {
 
     @SuppressWarnings("deprecation")
     public void reset(Game game) {
-        if (!game.getIsResetting()) {
-            game.setIsResetting(true);
-        }
         this.loadChunks();
 
         for (Inventory inventory : this.inventories) {
@@ -275,10 +272,6 @@ public class Region {
         }
 
         this.removingEntities.clear();
-        if (game.getIsResetting()) {
-            System.out.println("关闭重置！！！！！！！！！！！！！！");
-            game.setIsResetting(false);
-        }
     }
 
     public World getWorld() {
