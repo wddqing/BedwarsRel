@@ -837,7 +837,7 @@ public class PlayerListener extends BaseListener {
                 return;
             }
 
-            if (pie.getAction() == Action.RIGHT_CLICK_BLOCK && interactingMaterial == Material.FLINT_AND_STEEL) {
+            if (pie.getAction() == Action.RIGHT_CLICK_BLOCK && interactingMaterial == Material.FLINT_AND_STEEL && clickedBlock != null) {
                 Team team = g.getPlayerTeam(player);
                 for (Entity entity : player.getWorld().getNearbyEntities(clickedBlock.getLocation(), 1, 2, 1)) {
                     Player firePlayer = (Player) entity;
