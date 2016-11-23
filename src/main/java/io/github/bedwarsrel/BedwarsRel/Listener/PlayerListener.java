@@ -14,6 +14,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -834,6 +835,17 @@ public class PlayerListener extends BaseListener {
             if (pie.getAction() != Action.RIGHT_CLICK_BLOCK
                     && pie.getAction() != Action.RIGHT_CLICK_AIR) {
                 return;
+            }
+
+            if (pie.getAction() == Action.RIGHT_CLICK_BLOCK && interactingMaterial == Material.FLINT_AND_STEEL) {
+                Team team = g.getPlayerTeam(player);
+                for (Entity entity : player.getWorld().getNearbyEntities(clickedBlock.getLocation(), 1, 2, 1)) {
+                    Player firePlayer = (Player) entity;
+                    if (!firePlayer.equals(player) && team.getPlayers().contains(firePlayer)) {
+                        pie.setCancelled(true);
+                        break;
+                    }
+                }
             }
 
             if (clickedBlock != null && clickedBlock.getType() == Material.LEVER && !g.isSpectator(player)
