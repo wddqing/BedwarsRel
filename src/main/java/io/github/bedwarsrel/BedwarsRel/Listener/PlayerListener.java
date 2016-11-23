@@ -842,6 +842,7 @@ public class PlayerListener extends BaseListener {
                 for (Entity entity : player.getWorld().getNearbyEntities(clickedBlock.getLocation(), 1, 2, 1)) {
                     Player firePlayer = (Player) entity;
                     if (!firePlayer.equals(player) && team.getPlayers().contains(firePlayer)) {
+                        player.sendMessage(ChatWriter.pluginMessage(ChatColor.RED + "点火距离队友太近，可能会伤到队友！"));
                         pie.setCancelled(true);
                         break;
                     }
