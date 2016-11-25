@@ -116,20 +116,18 @@ public class BungeeGameCycle extends GameCycle {
         // reset region
         this.getGame().resetRegion();
 
-        //游戏运行次数大于三次，重新启动服务器
-        if (this.getGame().getGameRunTimes() >= 3) {
-            this.getGame().setState(GameState.RESTARTING);
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    String strUrl = Main.getInstance().getStringConfig("bungeecord.controller-rpc", "http://127.0.0.1:8081/rpc");
-                    JsonObject object = new JsonObject();
-                    object.addProperty("id", Main.getInstance().getServerId());
-                    String ret = Utils.httpPostRequest(strUrl, "service=mchere.manager&method=ManagerService.ResetServer&request=" + object.toString());
-                    Main.getInstance().getLogger().info("请求控制器重启：" + ret);
-                }
-            }.runTaskLaterAsynchronously(Main.getInstance(), 200L);
-        }
+        //每次游戏结束都重启
+        this.getGame().setState(GameState.RESTARTING);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                String strUrl = Main.getInstance().getStringConfig("bungeecord.controller-rpc", "http://127.0.0.1:8081/rpc");
+                JsonObject object = new JsonObject();
+                object.addProperty("id", Main.getInstance().getServerId());
+                String ret = Utils.httpPostRequest(strUrl, "service=mchere.manager&method=ManagerService.ResetServer&request=" + object.toString());
+                Main.getInstance().getLogger().info("请求控制器重启：" + ret);
+            }
+        }.runTaskLaterAsynchronously(Main.getInstance(), 200L);
 //        }
     }
 
